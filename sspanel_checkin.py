@@ -15,7 +15,8 @@ import sys
 login_url = "https://domain_name/auth/login"
 checkin_url = "https://domain_name/user/checkin"
 
-class sspanel():
+
+class SSPanel():
     def __init__(self, *args):
         headers = {
             "Accept": "text/html, application/xhtml+xml, application/xml",
@@ -36,7 +37,7 @@ class sspanel():
         else:
             self.email = args[0]
             self.password = args[1]
-        
+
     def login(self):
         postdata = {
             'email': self.email,
@@ -48,13 +49,13 @@ class sspanel():
         try:
             r = self.session.post(login_url, data=postdata)
             if r.json()["ret"] == 0:
-                print("请检查账号密码是否出错\n使用方法:\n命令行添加参数: sspanel_checkin.py email password\n或在代码中添加账密:sspanel(username, password)")
+                print(
+                    "请检查账号密码是否出错\n使用方法:\n命令行添加参数: sspanel_checkin.py username password\n或在代码中添加账密: sspanel(username, password)")
                 return
             elif r.json()["ret"] == 1:
                 print(r.json()["msg"])
         except:
-            print("Error")
-        
+            print("登录出错")
 
     def checkin(self):
         try:
@@ -62,14 +63,13 @@ class sspanel():
             print(r.json()["msg"])
         except:
             print("签到出错")
-        
-        
 
 
 def main():
-    ss = sspanel()
+    ss = SSPanel()
     ss.login()
     ss.checkin()
+
 
 if __name__ == '__main__':
     main()
