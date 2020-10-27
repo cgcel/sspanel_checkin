@@ -9,7 +9,6 @@
 '''
 
 import requests
-from bs4 import BeautifulSoup as bs
 import sys
 
 login_url = "https://domain_name/auth/login"
