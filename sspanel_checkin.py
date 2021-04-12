@@ -1,22 +1,13 @@
 #!/usr/bin/env python
 # -*- encoding: utf-8 -*-
-'''
-@File :sspanel_checkin.py
-@Time :2020/04/28 13:09:51
-@Author :gc chan 
-@Contact :cgc.elvin@gmail.com
-@Desc : None
-'''
+# author: elvin
 
 import requests
-from bs4 import BeautifulSoup as bs
 import sys
 
-login_url = "https://domain_name/auth/login"
-checkin_url = "https://domain_name/user/checkin"
 
+class SSPanel(object):
 
-class SSPanel():
     def __init__(self, *args):
         headers = {
             "Accept": "text/html, application/xhtml+xml, application/xml",
@@ -31,12 +22,23 @@ class SSPanel():
         self.session = requests.Session()
         self.session.headers.update(headers)
 
-        if(len(sys.argv) == 3):
+        if len(sys.argv) == 4:
             self.email = sys.argv[1]
             self.password = sys.argv[2]
+            self.url_domain = sys.argv[3]
+            self.url_login = "{}/auth/login".format(self.url_domain)
+            self.url_checkin = "{}/user/checkin".format(self.url_domain)
+
+        elif len(sys.argv) > 1 and len(sys.argv) != 4:
+            print("命令行参数格式错误")
+            return
+
         else:
             self.email = args[0]
             self.password = args[1]
+            self.url_domain = args[2]
+            self.url_login = "{}/auth/login".format(self.url_domain)
+            self.url_checkin = "{}/user/checkin".format(self.url_domain)
 
     def login(self):
         postdata = {
@@ -47,7 +49,7 @@ class SSPanel():
         }
 
         try:
-            r = self.session.post(login_url, data=postdata)
+            r = self.session.post(self.url_login, data=postdata)
             if r.json()["ret"] == 0:
                 print(
                     "请检查账号密码是否出错\n使用方法:\n命令行添加参数: sspanel_checkin.py username password\n或在代码中添加账密: sspanel(username, password)")
@@ -59,13 +61,14 @@ class SSPanel():
 
     def checkin(self):
         try:
-            r = self.session.post(checkin_url)
+            r = self.session.post(self.url_checkin)
             print(r.json()["msg"])
         except:
             print("签到出错")
 
 
 def main():
+    # ss = SSPanel(username, password, domain)
     ss = SSPanel()
     ss.login()
     ss.checkin()

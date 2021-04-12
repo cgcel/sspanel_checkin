@@ -2,15 +2,15 @@
 
 ## 使用方法
 
-1. 命令行添加参数: 
+1. 命令行添加参数 (`账号`, `密码`, `域名`): 
 
-    > $ python sspanel_checkin.py username password
+    > $ python sspanel_checkin.py username password domain
 
-1. 在代码中添加账密: 
+2. 在代码中添加参数 (`账号`, `密码`, `域名`): 
 
     ```python
     def main():
-        ss = SSPanel(username, password)
+        ss = SSPanel(username, password, domain)
         ss.login()
         ss.checkin()
     ```
