@@ -39,32 +39,41 @@ class SSPanel(object):
             self.url_domain = args[2]
             self.url_login = "{}/auth/login".format(self.url_domain)
             self.url_checkin = "{}/user/checkin".format(self.url_domain)
+        
+        self.session.get(self.url_domain)
 
     def login(self):
         postdata = {
             'email': self.email,
             'passwd': self.password,
             'code': '',
-            'remember_me': 'on'
+            # 'remember_me': 'on'
         }
 
         try:
+            self.session.get(self.url_login)
             r = self.session.post(self.url_login, data=postdata)
+            print(r.json())
             if r.json()["ret"] == 0:
-                print(
-                    "请检查账号密码是否出错\n使用方法:\n命令行添加参数: sspanel_checkin.py username password\n或在代码中添加账密: sspanel(username, password)")
+                print("""
+请检查账号密码是否出错
+使用方法:
+命令行添加参数: sspanel_checkin.py username password domain
+或在代码中添加账密: sspanel(username, password, domain)""")
                 return
             elif r.json()["ret"] == 1:
                 print(r.json()["msg"])
-        except:
+        except Exception as e:
             print("登录出错")
+            print(e)
 
     def checkin(self):
         try:
             r = self.session.post(self.url_checkin)
             print(r.json()["msg"])
-        except:
+        except Exception as e:
             print("签到出错")
+            print(e)
 
 
 def main():
