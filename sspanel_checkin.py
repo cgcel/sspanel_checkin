@@ -1,9 +1,11 @@
-#!/usr/bin/env python
+# !/usr/bin/env python3
 # -*- encoding: utf-8 -*-
 # author: elvin
 
-import requests
 import sys
+from datetime import datetime
+
+import requests
 
 
 class SSPanel(object):
@@ -39,10 +41,16 @@ class SSPanel(object):
             self.url_domain = args[2]
             self.url_login = "{}/auth/login".format(self.url_domain)
             self.url_checkin = "{}/user/checkin".format(self.url_domain)
-        
+
+        print(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))  # 打印时间信息
         self.session.get(self.url_domain)
 
+        self.login()  # 登录
+        self.checkin()  # 签到
+
     def login(self):
+        """登录函数
+        """
         postdata = {
             'email': self.email,
             'passwd': self.password,
@@ -55,8 +63,7 @@ class SSPanel(object):
             r = self.session.post(self.url_login, data=postdata)
             print(r.json())
             if r.json()["ret"] == 0:
-                print("""
-请检查账号密码是否出错
+                print("""请检查账号密码是否出错
 使用方法:
 命令行添加参数: sspanel_checkin.py username password domain
 或在代码中添加账密: sspanel(username, password, domain)""")
@@ -68,6 +75,8 @@ class SSPanel(object):
             print(e)
 
     def checkin(self):
+        """签到函数
+        """
         try:
             r = self.session.post(self.url_checkin)
             print(r.json()["msg"])
@@ -76,12 +85,6 @@ class SSPanel(object):
             print(e)
 
 
-def main():
-    # ss = SSPanel(username, password, domain)
-    ss = SSPanel()
-    ss.login()
-    ss.checkin()
-
-
 if __name__ == '__main__':
-    main()
+    # SSPanel(username, password, domain)
+    SSPanel()
