@@ -61,7 +61,7 @@ class SSPanel(object):
         try:
             self.session.get(self.url_login)
             r = self.session.post(self.url_login, data=postdata)
-            print(r.json())
+            # print(r.json())
             if r.json()["ret"] == 0:
                 print("""请检查账号密码是否出错
 使用方法:
