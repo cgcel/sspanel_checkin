@@ -1,18 +1,23 @@
-# sspanel_checkin.py
+# SSPanel 签到脚本
 
 ## 使用方法
 
-1. 命令行添加参数 (`账号`, `密码`, `域名`): 
+1. 命令行添加参数 (`账号`, `密码`, `域名`):
 
-    > $ python sspanel_checkin.py username password domain
+    ```
+    $ python sspanel_checkin.py username password domain
+    ```
 
-2. 在代码中添加参数 (`账号`, `密码`, `域名`): 
+1. 在代码中添加参数 (`账号`, `密码`, `域名`): 
 
     ```python
     def main():
-        ss = SSPanel(username, password, domain)
-        ss.login()
-        ss.checkin()
+        SSPanel(username, password, domain)
+        # SSPanel()
     ```
 
-    > $ python sspanel_checkin.py
+    保存后在命令行中运行:
+
+    ```
+    $ python sspanel_checkin.py
+    ```
