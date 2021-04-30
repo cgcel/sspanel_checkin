@@ -11,7 +11,7 @@
 1. 在代码中添加参数 (`账号`, `密码`, `域名`): 
 
     ```python
-    def main():
+    if __name__ == '__main__':
         SSPanel(username, password, domain)
         # SSPanel()
     ```
