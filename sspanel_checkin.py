@@ -3,6 +3,7 @@
 # author: elvin
 
 import sys
+reload(sys)
 from datetime import datetime
 
 import requests
@@ -23,7 +24,12 @@ class SSPanel(object):
 
         self.session = requests.Session()
         self.session.headers.update(headers)
-
+        # ----------------------------------
+        # fix when using `>>` to redirect stdout,it print "'ascii' codec can't encode characters in position 0-8: ordinal not in range(128)",by setting default encoding.
+        # 使用`>>`重定向脚本stdout输出时会提示ascii编码错误，手动设置默认编码解决
+        # ----------------------------------
+        sys.setdefaultencoding('utf8')
+        
         if len(sys.argv) == 4:
             self.email = sys.argv[1]
             self.password = sys.argv[2]
